@@ -323,3 +323,61 @@ a,button,.btn{-webkit-tap-highlight-color:transparent}
 @media(prefers-reduced-motion:reduce){
   .btn:active,.cap:active,.cc:active{transform:none}
 }
+
+/* ---------- honest affordances ---------- */
+/* pain-card "answers" are now real links to the matching feature */
+.pain .card a.a{cursor:pointer;text-decoration:none;transition:gap .15s ease,color .15s ease}
+.pain .card a.a svg{transition:transform .15s ease}
+.pain .card a.a:hover{color:var(--teal-800);gap:.72em}
+.pain .card a.a:hover svg{transform:translateX(3px)}
+.pain .card a.a:active svg{transform:translateX(1px)}
+/* capability cards are not clickable — highlight on hover, but no button-like lift */
+.cap:hover{transform:none;box-shadow:var(--shadow-md);border-color:var(--border-2)}
+.cap:active{transform:none}
+/* feature blocks clear the sticky header when linked to */
+.feat[id]{scroll-margin-top:96px}
+
+/* ---------- interactive POS demo (hero) ---------- */
+.pos-menu-h{display:flex;align-items:center;justify-content:space-between;padding:12px 15px 2px}
+.pos-menu-h b{font-size:.82rem;color:var(--ink);font-weight:700}
+.pos-try{font-size:.58rem;font-weight:800;letter-spacing:.08em;color:var(--teal-700);background:var(--teal-50);border:1px solid var(--teal-100);padding:.32em .6em;border-radius:20px;text-transform:uppercase}
+.pos-menu{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px 15px 10px}
+.menu-item{display:flex;align-items:center;gap:8px;text-align:left;background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:8px 9px;cursor:pointer;font-family:var(--sans);transition:transform .12s ease,border-color .15s ease,box-shadow .15s ease;-webkit-tap-highlight-color:transparent}
+.menu-item:hover{border-color:#9fe3d6;box-shadow:var(--shadow-sm)}
+.menu-item:active{transform:scale(.95)}
+.menu-item:focus-visible{outline:2.5px solid var(--teal-600);outline-offset:2px}
+.menu-item .mi-th{width:30px;height:30px;border-radius:8px;flex:none;display:grid;place-items:center;color:#fff;font-weight:700;font-size:.8rem}
+.menu-item .mi-tx{min-width:0;line-height:1.15}
+.menu-item .mi-tx b{display:block;font-size:.72rem;color:var(--ink);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.menu-item .mi-tx small{font-size:.68rem;color:var(--teal-700);font-weight:700;font-variant-numeric:tabular-nums}
+
+.pos-body .cart{min-height:46px;max-height:154px;overflow-y:auto}
+.cart-empty{padding:16px;text-align:center;font-size:.76rem;color:var(--muted)}
+.cart-line .step{display:inline-flex;align-items:center;gap:6px;flex:none}
+.cart-line .step button{width:22px;height:22px;border-radius:7px;border:1px solid var(--border-2);background:#fff;color:var(--ink);font-size:1rem;font-weight:700;line-height:1;cursor:pointer;display:grid;place-items:center;-webkit-tap-highlight-color:transparent;transition:transform .1s ease,border-color .15s ease}
+.cart-line .step button:hover{border-color:var(--teal-600)}
+.cart-line .step button:active{transform:scale(.86)}
+.cart-line .step b{font-size:.78rem;min-width:16px;text-align:center;font-variant-numeric:tabular-nums;color:var(--ink)}
+.cart-line .amt{width:46px;text-align:right}
+
+button.charge{width:calc(100% - 30px);border:0;cursor:pointer;font-family:var(--sans)}
+.charge[disabled]{background:var(--border-2);color:#fff;cursor:default;box-shadow:none}
+.charge:not([disabled]):active{transform:scale(.985)}
+
+/* paid overlay */
+.pos-paid{position:absolute;inset:0;z-index:2;background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:26px 22px;gap:12px;animation:posFade .28s ease}
+.pos-paid[hidden]{display:none}
+@keyframes posFade{from{opacity:0}to{opacity:1}}
+.pos-paid-ic{width:62px;height:62px;border-radius:50%;background:var(--teal-50);border:1px solid var(--teal-100);display:grid;place-items:center;animation:posPop .45s cubic-bezier(.2,1.12,.4,1)}
+.pos-paid-ic svg{width:34px;height:34px;color:var(--success)}
+@keyframes posPop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+.pos-paid-t{font-family:var(--disp);font-size:1.06rem;color:var(--ink);font-weight:600}
+.pos-receipt{width:100%;max-width:224px;background:var(--surface-2);border:1px dashed var(--border-2);border-radius:12px;padding:12px 14px;font-size:.72rem}
+.pos-receipt .rl{display:flex;justify-content:space-between;gap:10px;padding:2px 0;color:var(--body);font-variant-numeric:tabular-nums}
+.pos-receipt .rl span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pos-receipt .rl.tot{border-top:1px dashed var(--border-2);margin-top:6px;padding-top:6px;color:var(--ink);font-weight:700}
+button.pos-new{width:auto;margin:0;padding:.7em 1.2em;background:var(--teal-700);box-shadow:0 8px 16px -8px rgba(15,118,110,.7)}
+@media(prefers-reduced-motion:reduce){
+  .pos-paid,.pos-paid-ic{animation:none}
+  .menu-item:active,.cart-line .step button:active,.charge:active{transform:none}
+}

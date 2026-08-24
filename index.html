@@ -91,7 +91,7 @@
 
     <!-- Hero device: POS with Filipino snacks -->
     <div class="stage rv">
-      <div class="phone float">
+      <div class="phone" id="posDemo">
         <div class="screen">
           <div class="app-head">
             <div class="st">
@@ -101,45 +101,26 @@
             <span class="livepill"><i></i>OFFLINE READY</span>
           </div>
 
-          <div class="cart">
-            <div class="cart-line">
-              <span class="thumb" style="background:linear-gradient(140deg,#e0a53a,#b06a12)">B</span>
-              <span class="nm"><b>Boy Bawang Garlic 100g</b><small>₱20 each</small></span>
-              <span class="qty">×3</span><span class="amt">₱60</span>
-            </div>
-            <div class="cart-line">
-              <span class="thumb" style="background:linear-gradient(140deg,#d94f4f,#a11f1f)">P</span>
-              <span class="nm"><b>Piattos Cheese 40g</b><small>₱27 each</small></span>
-              <span class="qty">×2</span><span class="amt">₱54</span>
-            </div>
-            <div class="cart-line">
-              <span class="thumb" style="background:linear-gradient(140deg,#7a5230,#4a2f18)">C</span>
-              <span class="nm"><b>Choc Nut 24s</b><small>₱55 each</small></span>
-              <span class="qty">×1</span><span class="amt">₱55</span>
-            </div>
-            <div class="cart-line">
-              <span class="thumb" style="background:linear-gradient(140deg,#2f8fb0,#155b74)">S</span>
-              <span class="nm"><b>Sky Flakes 10s</b><small>₱44 each</small></span>
-              <span class="qty">×1</span><span class="amt">₱44</span>
-            </div>
+          <div class="pos-body" id="posBody">
+            <div class="pos-menu-h"><b>Tap an item to add</b><span class="pos-try">Live demo</span></div>
+            <div class="pos-menu" id="posMenu" aria-label="Sample products"></div>
+            <div class="cart" id="posCart" aria-live="polite"></div>
+            <div class="totals" id="posTotals"></div>
+            <button class="charge" id="posCharge" type="button" disabled>
+              <svg><use href="#i-check"/></svg><span id="posChargeLbl">Add items to charge</span>
+            </button>
           </div>
 
-          <div class="totals">
-            <div class="r"><span>Subtotal</span><span>₱213.00</span></div>
-            <div class="r"><span>Suki discount</span><span>−₱13.00</span></div>
-            <div class="r grand"><span>Total</span><b>₱200.00</b></div>
+          <div class="pos-paid" id="posPaid" hidden>
+            <span class="pos-paid-ic"><svg><use href="#i-checkc"/></svg></span>
+            <b class="pos-paid-t">Bayad na — salamat po! 🎉</b>
+            <div class="pos-receipt" id="posReceipt"></div>
+            <button class="charge pos-new" id="posNew" type="button"><svg><use href="#i-return"/></svg> New sale</button>
           </div>
-
-          <div class="paysplit">
-            <div class="p"><small><svg><use href="#i-cash"/></svg> Cash</small><b>₱150.00</b></div>
-            <div class="p"><small><svg><use href="#i-wallet"/></svg> GCash</small><b>₱50.00</b></div>
-          </div>
-
-          <div class="charge"><svg><use href="#i-check"/></svg> Charge ₱200.00</div>
         </div>
       </div>
 
-      <div class="receipt float" style="animation-delay:-3s">
+      <div class="receipt" id="posFloatReceipt" style="animation-delay:-3s" aria-hidden="true">
         <h4><svg><use href="#i-receipt"/></svg> SALES RECEIPT</h4>
         <div style="font-size:.66rem;color:var(--muted)">Aling Nena's Snack Haus</div>
         <div class="dot"></div>
@@ -176,17 +157,17 @@
       <div class="card rv">
         <div class="q">"Saan napunta ang pera?"</div>
         <p>Malaki ang benta pero parang walang natitira. Without real cost tracking, hindi mo alam kung saan lumulubog ang kita.</p>
-        <div class="a"><svg><use href="#i-arrow"/></svg> Kahvi shows profit per sale</div>
+        <a class="a" href="#feat-reports"><svg><use href="#i-arrow"/></svg> Kahvi shows profit per sale</a>
       </div>
       <div class="card rv">
         <div class="q">"Ubos na pala 'yon?"</div>
         <p>Nawawalan ng benta dahil out of stock, o sobrang order na nabubulok sa istante. Puro hula ang restock.</p>
-        <div class="a"><svg><use href="#i-arrow"/></svg> Live stock + low-stock alerts</div>
+        <a class="a" href="#feat-inventory"><svg><use href="#i-arrow"/></svg> Live stock + low-stock alerts</a>
       </div>
       <div class="card rv">
         <div class="q">"Magkano nga ba kinita kahapon?"</div>
         <p>Kailangan pang mag-add-add sa notebook tuwing gabi. Prone to error, at nakakaubos ng oras.</p>
-        <div class="a"><svg><use href="#i-arrow"/></svg> One-tap daily reports</div>
+        <a class="a" href="#feat-reports"><svg><use href="#i-arrow"/></svg> One-tap daily reports</a>
       </div>
     </div>
   </div>
@@ -199,7 +180,7 @@
   <div class="wrap">
 
     <!-- Feature 1: POS -->
-    <div class="feat">
+    <div class="feat" id="feat-pos">
       <div class="rv">
         <span class="tag"><svg><use href="#i-cart"/></svg> Point of sale</span>
         <h3>Ring up a sale in seconds</h3>
@@ -228,7 +209,7 @@
     </div>
 
     <!-- Feature 2: Inventory -->
-    <div class="feat flip">
+    <div class="feat flip" id="feat-inventory">
       <div class="rv">
         <span class="tag"><svg><use href="#i-box"/></svg> Inventory &amp; stock</span>
         <h3>Never lose track of a single item</h3>
@@ -253,7 +234,7 @@
     </div>
 
     <!-- Feature 3: Reports -->
-    <div class="feat">
+    <div class="feat" id="feat-reports">
       <div class="rv">
         <span class="tag"><svg><use href="#i-chart"/></svg> Reports &amp; profit</span>
         <h3>Know your true kita — every single day</h3>
