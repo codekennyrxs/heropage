@@ -158,18 +158,103 @@
     if (disc > 0) rows += '<div class="rl"><span>Suki discount</span><b>−' + peso(disc) + '</b></div>';
     rows += '<div class="rl tot"><span>Total paid</span><b>' + peso(tot) + '</b></div>';
     receiptEl.innerHTML = rows;
-    bodyEl.hidden = true;
+    // overlay sits on top of the (still in-flow) body so the screen keeps its height
     paidEl.hidden = false;
   });
 
   newBtn.addEventListener('click', function () {
     cart = {};
     paidEl.hidden = true;
-    bodyEl.hidden = false;
     refresh();
     chargeBtn.focus();
   });
 
   renderMenu();
   refresh();
+})();
+
+/* ---- interactive reports chart in the Reports feature panel ---- */
+(function () {
+  'use strict';
+  var barsEl = document.getElementById('repBars');
+  var labelsEl = document.getElementById('repLabels');
+  if (!barsEl || !labelsEl) return;
+
+  // one week of sample daily figures; last row = today
+  var DAYS = [
+    { ab: 'Lun', full: 'Lunes',      date: 'Aug 18', benta: 5200, kita: 1310, orders: 41 },
+    { ab: 'Mar', full: 'Martes',     date: 'Aug 19', benta: 6800, kita: 1760, orders: 52 },
+    { ab: 'Miy', full: 'Miyerkules', date: 'Aug 20', benta: 4600, kita: 1150, orders: 36 },
+    { ab: 'Huw', full: 'Huwebes',    date: 'Aug 21', benta: 7700, kita: 2010, orders: 58 },
+    { ab: 'Biy', full: 'Biyernes',   date: 'Aug 22', benta: 6100, kita: 1560, orders: 47 },
+    { ab: 'Sab', full: 'Sabado',     date: 'Aug 23', benta: 9100, kita: 2440, orders: 68 },
+    { ab: 'Lin', full: 'Today',      date: 'Aug 24', benta: 8420, kita: 2180, orders: 63 }
+  ];
+  var maxBenta = Math.max.apply(null, DAYS.map(function (d) { return d.benta; }));
+  var totalBenta = DAYS.reduce(function (s, d) { return s + d.benta; }, 0);
+  var selected = DAYS.length - 1; // default: today
+
+  var el = {
+    date: document.getElementById('repDate'),
+    bentaLbl: document.getElementById('repBentaLbl'),
+    benta: document.getElementById('repBenta'),
+    bentaDelta: document.getElementById('repBentaDelta'),
+    kita: document.getElementById('repKita'),
+    margin: document.getElementById('repMargin'),
+    orders: document.getElementById('repOrders'),
+    basket: document.getElementById('repBasket'),
+    total: document.getElementById('repTotal')
+  };
+  function peso(n) { return '₱' + Math.round(n).toLocaleString('en-US'); }
+
+  function renderChart() {
+    barsEl.innerHTML = DAYS.map(function (d, i) {
+      var h = Math.max(14, Math.round(d.benta / maxBenta * 100));
+      return '<button type="button" class="b' + (i === selected ? ' hi' : '') + '" data-i="' + i +
+        '" style="height:' + h + '%" aria-label="' + d.full + ', ' + peso(d.benta) + '">' +
+        '<span class="bval">' + peso(d.benta) + '</span></button>';
+    }).join('');
+    labelsEl.innerHTML = DAYS.map(function (d, i) {
+      return '<button type="button" class="' + (i === selected ? 'on' : '') + '" data-i="' + i + '">' + d.ab + '</button>';
+    }).join('');
+  }
+
+  function renderKpis() {
+    var d = DAYS[selected];
+    el.date.textContent = (d.full === 'Today' ? 'Today' : d.full) + ' · ' + d.date;
+    el.bentaLbl.textContent = d.full === 'Today' ? 'Benta ngayon' : 'Benta';
+    el.benta.textContent = peso(d.benta);
+    el.kita.textContent = peso(d.kita);
+    el.margin.textContent = (d.kita / d.benta * 100).toFixed(1) + '% margin';
+    el.orders.textContent = d.orders;
+    el.basket.textContent = peso(d.benta / d.orders) + ' avg basket';
+    if (selected > 0) {
+      var prev = DAYS[selected - 1], diff = (d.benta - prev.benta) / prev.benta * 100;
+      var up = diff >= 0;
+      el.bentaDelta.textContent = (up ? '▲ ' : '▼ ') + Math.abs(Math.round(diff)) + '% vs ' + prev.ab;
+      el.bentaDelta.style.color = up ? '#8ff0b6' : '#fca5a5';
+    } else {
+      el.bentaDelta.textContent = 'Simula ng linggo';
+      el.bentaDelta.style.color = '#bff0e8';
+    }
+    el.total.textContent = peso(totalBenta) + ' total';
+  }
+
+  function select(i) {
+    selected = i;
+    // toggle highlight without full re-render so the bars keep their transition
+    barsEl.querySelectorAll('.b').forEach(function (b, idx) { b.classList.toggle('hi', idx === i); });
+    labelsEl.querySelectorAll('button').forEach(function (b, idx) { b.classList.toggle('on', idx === i); });
+    renderKpis();
+  }
+
+  function onClick(e) {
+    var b = e.target.closest('[data-i]');
+    if (b) select(+b.getAttribute('data-i'));
+  }
+  barsEl.addEventListener('click', onClick);
+  labelsEl.addEventListener('click', onClick);
+
+  renderChart();
+  renderKpis();
 })();

@@ -248,26 +248,18 @@
       </div>
       <div class="fig rv">
         <div class="panel">
-          <div class="panel-h"><b><svg><use href="#i-chart"/></svg> Today · Aug 24</b><span style="font-size:.74rem;color:var(--muted)">Aling Nena's</span></div>
+          <div class="panel-h"><b><svg><use href="#i-chart"/></svg> <span id="repDate">Today · Aug 24</span></b><span class="pos-try">Tap a day</span></div>
           <div class="dash">
             <div class="kpis">
-              <div class="kpi feat-teal"><small><svg><use href="#i-coins"/></svg> Benta ngayon</small><b>₱8,420</b><div class="delta">▲ 12% vs kahapon</div></div>
-              <div class="kpi"><small><svg><use href="#i-chart"/></svg> Kita (gross)</small><b>₱2,180</b><div class="delta">25.9% margin</div></div>
-              <div class="kpi"><small><svg><use href="#i-receipt"/></svg> Orders</small><b>63</b><div class="delta" style="color:var(--muted)">₱134 avg basket</div></div>
+              <div class="kpi feat-teal"><small><svg><use href="#i-coins"/></svg> <span id="repBentaLbl">Benta ngayon</span></small><b id="repBenta">₱8,420</b><div class="delta" id="repBentaDelta">▲ 12% vs kahapon</div></div>
+              <div class="kpi"><small><svg><use href="#i-chart"/></svg> Kita (gross)</small><b id="repKita">₱2,180</b><div class="delta" id="repMargin">25.9% margin</div></div>
+              <div class="kpi"><small><svg><use href="#i-receipt"/></svg> Orders</small><b id="repOrders">63</b><div class="delta" id="repBasket" style="color:var(--muted)">₱134 avg basket</div></div>
               <div class="kpi"><small><svg><use href="#i-box"/></svg> Low stock</small><b>4</b><div class="delta" style="color:var(--danger)">Kailangan i-restock</div></div>
             </div>
             <div class="chartbox">
-              <div class="ct"><b>Benta ng nakaraang 7 araw</b><span>₱46,900 total</span></div>
-              <div class="bars">
-                <div class="b" style="height:44%"></div>
-                <div class="b" style="height:58%"></div>
-                <div class="b" style="height:39%"></div>
-                <div class="b" style="height:66%"></div>
-                <div class="b" style="height:52%"></div>
-                <div class="b" style="height:78%"></div>
-                <div class="b hi" style="height:92%"></div>
-              </div>
-              <div class="xlabels"><span>Lun</span><span>Mar</span><span>Miy</span><span>Huw</span><span>Biy</span><span>Sab</span><span>Lin</span></div>
+              <div class="ct"><b>Benta ng nakaraang 7 araw</b><span id="repTotal">₱46,900 total</span></div>
+              <div class="bars" id="repBars"></div>
+              <div class="xlabels" id="repLabels"></div>
             </div>
           </div>
         </div>

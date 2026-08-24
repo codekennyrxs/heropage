@@ -381,3 +381,14 @@ button.pos-new{width:auto;margin:0;padding:.7em 1.2em;background:var(--teal-700)
   .pos-paid,.pos-paid-ic{animation:none}
   .menu-item:active,.cart-line .step button:active,.charge:active{transform:none}
 }
+
+/* ---------- interactive reports chart (feature 3) ---------- */
+.bars{padding-top:16px}
+button.b{border:0;padding:0;cursor:pointer;font-family:var(--sans);transition:filter .15s ease}
+.bars button.b:hover{filter:brightness(1.06) saturate(1.05)}
+.bars button.b:focus-visible{outline:2.5px solid var(--teal-700);outline-offset:2px}
+.bars .b .bval{position:absolute;top:-15px;left:50%;transform:translateX(-50%);font-size:.6rem;font-weight:800;color:var(--ink);white-space:nowrap;font-variant-numeric:tabular-nums;opacity:0;transition:opacity .15s ease;pointer-events:none}
+.bars .b.hi .bval,.bars button.b:hover .bval{opacity:1}
+.xlabels button{border:0;background:none;padding:2px 0;font-family:var(--sans);cursor:pointer;color:var(--muted);transition:color .15s ease}
+.xlabels button.on{color:var(--teal-700);font-weight:700}
+.xlabels button:hover{color:var(--ink)}
