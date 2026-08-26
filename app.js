@@ -257,4 +257,43 @@
 
   renderChart();
   renderKpis();
+
+  /* intro flourish: count the KPIs up and grow the bars when the panel
+     first scrolls into view — draws the eye to the profit numbers.
+     Motivated motion only; reduced-motion users keep the final values. */
+  function animateCount(node, to, dur, fmt) {
+    var start = performance.now();
+    (function tick(now) {
+      var t = Math.min(1, (now - start) / dur);
+      var e = 1 - Math.pow(1 - t, 3); // easeOutCubic
+      node.textContent = fmt(to * e);
+      if (t < 1) requestAnimationFrame(tick);
+    })(start);
+  }
+
+  function playIntro() {
+    var bars = barsEl.querySelectorAll('.b');
+    requestAnimationFrame(function () {
+      bars.forEach(function (b) { b.style.height = b.dataset.h || b.style.height; });
+    });
+    var d = DAYS[selected];
+    animateCount(el.benta, d.benta, 950, peso);
+    animateCount(el.kita, d.kita, 950, peso);
+    animateCount(el.orders, d.orders, 900, function (n) { return String(Math.round(n)); });
+    animateCount(el.total, totalBenta, 1050, function (n) { return peso(n) + ' total'; });
+  }
+
+  var reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var panel = barsEl.closest('.panel') || document.getElementById('feat-reports');
+  if (!reduce && 'IntersectionObserver' in window && panel) {
+    barsEl.querySelectorAll('.b').forEach(function (b) { b.dataset.h = b.style.height; b.style.height = '0%'; });
+    el.benta.textContent = '₱0'; el.kita.textContent = '₱0';
+    el.orders.textContent = '0'; el.total.textContent = '₱0 total';
+    var introIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { introIO.disconnect(); playIntro(); }
+      });
+    }, { threshold: 0.35 });
+    introIO.observe(panel);
+  }
 })();

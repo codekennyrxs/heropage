@@ -130,6 +130,7 @@ p{margin:0}
   position:absolute;right:-14px;bottom:2px;width:172px;background:#fff;border-radius:14px;
   box-shadow:var(--shadow-lg);padding:13px 14px;font-size:.7rem;color:var(--body);
   border:1px solid var(--border);
+  animation:float 6s ease-in-out infinite;
 }
 .receipt h4{font-family:var(--sans);font-size:.7rem;font-weight:700;color:var(--ink);letter-spacing:.02em;margin:0 0 2px;display:flex;align-items:center;gap:.4em}
 .receipt h4 svg{width:13px;height:13px;color:var(--success)}
@@ -280,7 +281,7 @@ footer small{font-size:.82rem;line-height:1.6}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
 @media(prefers-reduced-motion:reduce){
   .rv{opacity:1;transform:none;filter:none;transition:none}
-  .float{animation:none}
+  .float,.receipt{animation:none}
   *{scroll-behavior:auto!important}
 }
 html{scroll-behavior:smooth}
